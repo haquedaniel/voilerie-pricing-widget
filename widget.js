@@ -42,7 +42,7 @@ quoteBtn.addEventListener("click", async () => {
       } else if (data.reason === "min_stay_not_met") {
         result.textContent = `Séjour minimum : ${data.min_nights} nuits.`;
       } else {
-        result.textContent = "Désolé, nous ne pouvons pas proposer de tarif pour ces dates.";
+        result.textContent = `Désolé, nous ne pouvons pas proposer de tarif pour ces dates. : ${data.reason}`;
       }
 
       return;
