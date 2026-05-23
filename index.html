@@ -37,6 +37,48 @@
     <div id="result" class="result"></div>
   </main>
 
+
+  <div id="leadForm" class="lead-form hidden">
+  <h3>Demande de réservation</h3>
+
+  <label>
+    Nom
+    <input id="leadName" type="text" />
+  </label>
+
+  <label>
+    Email
+    <input id="leadEmail" type="email" />
+  </label>
+
+  <label>
+    Téléphone (optionnel)
+    <input id="leadPhone" type="text" />
+  </label>
+
+  <label>
+    Message
+    <textarea id="leadMessage"></textarea>
+  </label>
+
+  <label class="checkbox">
+    <input id="gdprConsent" type="checkbox" />
+    <span>
+      J’accepte que mes données soient utilisées pour traiter ma demande de réservation.
+    </span>
+  </label>
+
+  <p class="gdpr-text">
+    Vos données sont utilisées uniquement dans le cadre de votre demande de réservation et ne seront jamais revendues à des tiers.
+  </p>
+
+  <button id="leadBtn">
+    Envoyer la demande
+  </button>
+
+  <div id="leadResult"></div>
+</div>
+
   <script src="widget.js"></script>
 </body>
 </html>

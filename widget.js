@@ -2,6 +2,7 @@ const API_BASE = "https://api.leclosdelavoilerie.com";
 
 const quoteBtn = document.getElementById("quoteBtn");
 const result = document.getElementById("result");
+const leadForm = document.getElementById("leadForm");
 
 function formatEuro(value) {
   return new Intl.NumberFormat("fr-FR", {
@@ -36,7 +37,7 @@ quoteBtn.addEventListener("click", async () => {
 
     if (!data.available) {
       result.className = "result error";
-
+      leadForm.classList.add("hidden");
       if (data.reason === "occupied") {
         result.textContent = "Désolé, ces dates ne sont pas disponibles.";
       } else if (data.reason === "min_stay_not_met") {
@@ -54,6 +55,7 @@ quoteBtn.addEventListener("click", async () => {
       ${data.nights} nuits — ${formatEuro(data.total_price)}<br>
       <small>Dont ménage : ${formatEuro(data.cleaning_fee || 0)}</small>
     `;
+    leadForm.classList.remove("hidden");
   } catch (err) {
     result.className = "result error";
     result.textContent = `Erreur : ${err.message}`;
