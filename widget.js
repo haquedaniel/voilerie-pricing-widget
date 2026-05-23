@@ -20,6 +20,28 @@ const leadResult = document.getElementById("leadResult");
 const params = new URLSearchParams(window.location.search);
 const initialPropertyId = params.get("property_id");
 
+const theme = params.get("theme");
+
+function applyTheme() {
+  const root = document.documentElement;
+
+  if (theme === "dark") {
+    root.style.setProperty("--bg", "transparent");
+    root.style.setProperty("--card", "#111111");
+    root.style.setProperty("--text", "#f5f0e8");
+    root.style.setProperty("--muted", "#c8c0b5");
+    root.style.setProperty("--accent", "#d6a85d");
+    root.style.setProperty("--border", "#333333");
+  }
+
+  for (const key of ["bg", "card", "text", "muted", "accent", "border"]) {
+    const value = params.get(key);
+    if (value) root.style.setProperty(`--${key}`, value);
+  }
+}
+
+applyTheme();
+
 const propertySelect = document.getElementById("propertyId");
 
 if (initialPropertyId && propertySelect) {
@@ -222,4 +244,26 @@ leadBtn.addEventListener("click", async () => {
     leadResult.className = "result error";
     leadResult.textContent = `Erreur : ${err.message}`;
   }
+});
+
+const checkInInput = document.getElementById("checkIn");
+const checkOutInput = document.getElementById("checkOut");
+
+checkInInput.addEventListener("change", () => {
+  if (!checkInInput.value) return;
+
+  const checkInDate = new Date(`${checkInInput.value}T00:00:00`);
+  const nextDay = new Date(checkInDate);
+  nextDay.setDate(nextDay.getDate() + 1);
+
+  const minCheckout = nextDay.toISOString().slice(0, 10);
+
+  checkOutInput.min = minCheckout;
+
+  if (!checkOutInput.value || checkOutInput.value <= checkInInput.value) {
+    checkOutInput.value = minCheckout;
+  }
+
+  checkOutInput.showPicker?.();
+  checkOutInput.focus();
 });
