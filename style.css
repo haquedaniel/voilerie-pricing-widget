@@ -152,8 +152,19 @@ textarea {
 .quote-card {
   padding: 16px;
   border-radius: 14px;
-  background: #f7f2ea;
+  background: var(--quote-bg, #f7f2ea);
   border: 1px solid var(--border);
+  color: var(--quote-text, var(--text));
+}
+
+.quote-title,
+.quote-price,
+.quote-next {
+  color: var(--quote-text, var(--text));
+}
+
+.quote-details {
+  color: var(--quote-muted, var(--muted));
 }
 
 .quote-kicker {
@@ -197,6 +208,14 @@ textarea {
   margin-top: 14px;
   padding-top: 12px;
   border-top: 1px solid var(--border);
+}
+
+.quote-breakdown div {
+  color: var(--quote-text, var(--text));
+}
+
+.quote-breakdown strong {
+  color: var(--quote-text, var(--text));
 }
 
 .quote-breakdown div {

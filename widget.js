@@ -25,14 +25,18 @@ const theme = params.get("theme");
 function applyTheme() {
   const root = document.documentElement;
 
-  if (theme === "dark") {
-    root.style.setProperty("--bg", "transparent");
-    root.style.setProperty("--card", "#111111");
-    root.style.setProperty("--text", "#f5f0e8");
-    root.style.setProperty("--muted", "#c8c0b5");
-    root.style.setProperty("--accent", "#d6a85d");
-    root.style.setProperty("--border", "#333333");
-  }
+if (theme === "dark") {
+  root.style.setProperty("--bg", "transparent");
+  root.style.setProperty("--card", "#111111");
+  root.style.setProperty("--text", "#f5f0e8");
+  root.style.setProperty("--muted", "#c8c0b5");
+  root.style.setProperty("--accent", "#d6a85d");
+  root.style.setProperty("--border", "#333333");
+
+  root.style.setProperty("--quote-bg", "#181818");
+  root.style.setProperty("--quote-text", "#f5f0e8");
+  root.style.setProperty("--quote-muted", "#c8c0b5");
+}
 
   for (const key of ["bg", "card", "text", "muted", "accent", "border"]) {
     const value = params.get(key);
