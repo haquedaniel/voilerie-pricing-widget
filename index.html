@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demande de disponibilité</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="widget">
+    <h2>Vérifier les disponibilités</h2>
+
+    <label>
+      Appartement
+      <select id="propertyId">
+        <option value="2">Voilerie 2</option>
+      </select>
+    </label>
+
+    <label>
+      Arrivée
+      <input id="checkIn" type="date" />
+    </label>
+
+    <label>
+      Départ
+      <input id="checkOut" type="date" />
+    </label>
+
+    <label>
+      Voyageurs
+      <input id="guests" type="number" min="1" value="2" />
+    </label>
+
+    <button id="quoteBtn">Voir le prix</button>
+
+    <div id="result" class="result"></div>
+  </main>
+
+  <script src="widget.js"></script>
+</body>
+</html>
