@@ -64,20 +64,58 @@ quoteBtn.addEventListener("click", async () => {
 
       return;
     }
+    const accommodationOnly =
+      data.total_price - (data.cleaning_fee || 0);
+
+    const taxeDeSejourPerNight = Math.min(
+      accommodationOnly * 0.05 / data.nights / data.guests,
+      5.05
+    );
+
+    const taxeDeSejour =
+      taxeDeSejourPerNight * data.nights * data.guests;
+
+    const estimatedTotal =
+      data.total_price + taxeDeSejour;
 
     result.className = "result success";
     result.innerHTML = `
       <div class="quote-card">
         <div class="quote-kicker">Bonne nouvelle</div>
-        <div class="quote-title">Ce séjour est disponible</div>
+
+        <div class="quote-title">
+          Ce séjour est disponible
+        </div>
 
         <div class="quote-price">
-          ${formatEuro(data.total_price)}
+          ${formatEuro(estimatedTotal)}
         </div>
 
         <div class="quote-details">
           ${data.nights} nuits pour ${data.guests} voyageur${Number(data.guests) > 1 ? "s" : ""}
-          ${data.cleaning_fee ? `<br>dont forfait ménage : ${formatEuro(data.cleaning_fee)}` : ""}
+        </div>
+
+        <div class="quote-breakdown">
+          <div>
+            Hébergement
+            <strong>${formatEuro(accommodationOnly)}</strong>
+          </div>
+
+          ${
+            data.cleaning_fee
+              ? `
+          <div>
+            Forfait ménage
+            <strong>${formatEuro(data.cleaning_fee)}</strong>
+          </div>
+          `
+              : ""
+          }
+
+          <div>
+            Taxe de séjour estimée
+            <strong>${formatEuro(taxeDeSejour)}</strong>
+          </div>
         </div>
 
         <div class="quote-next">
@@ -85,7 +123,6 @@ quoteBtn.addEventListener("click", async () => {
         </div>
       </div>
     `;
-
     leadForm.classList.remove("hidden");
   } catch (err) {
     result.className = "result error";
