@@ -17,6 +17,18 @@ let lastQuote = null;
 const leadBtn = document.getElementById("leadBtn");
 const leadResult = document.getElementById("leadResult");
 
+const params = new URLSearchParams(window.location.search);
+const initialPropertyId = params.get("property_id");
+
+const propertySelect = document.getElementById("propertyId");
+
+if (initialPropertyId && propertySelect) {
+  propertySelect.value = initialPropertyId;
+
+  // Optional: hide selector when the page is for a fixed apartment
+  propertySelect.closest("label").style.display = "none";
+}
+
 quoteBtn.addEventListener("click", async () => {
   result.className = "result";
   result.textContent = "Recherche en cours...";
