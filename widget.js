@@ -39,9 +39,25 @@ quoteBtn.addEventListener("click", async () => {
       result.className = "result error";
       leadForm.classList.add("hidden");
       if (data.reason === "occupied") {
-        result.textContent = "Désolé, ces dates ne sont pas disponibles.";
+        result.innerHTML = `
+          <div class="quote-card">
+            <div class="quote-kicker">Presque</div>
+            <div class="quote-title">Ces dates ne sont pas disponibles</div>
+            <div class="quote-details">
+              Essayez d'autres dates ou contactez-nous pour que nous vous proposions une alternative.
+            </div>
+          </div>
+        `;
       } else if (data.reason === "min_stay_not_met") {
-        result.textContent = `Séjour minimum : ${data.min_nights} nuits.`;
+        result.innerHTML = `
+          <div class="quote-card">
+            <div class="quote-kicker">Séjour minimum</div>
+            <div class="quote-title">${data.min_nights} nuits minimum pour ces dates</div>
+            <div class="quote-details">
+              Modifiez vos dates pour voir le tarif disponible.
+            </div>
+          </div>
+`;
       } else {
         result.textContent = `Désolé, nous ne pouvons pas proposer de tarif pour ces dates. : ${data.reason}`;
       }
@@ -51,10 +67,25 @@ quoteBtn.addEventListener("click", async () => {
 
     result.className = "result success";
     result.innerHTML = `
-      <strong>Disponible</strong><br>
-      ${data.nights} nuits — ${formatEuro(data.total_price)}<br>
-      <small>Dont ménage : ${formatEuro(data.cleaning_fee || 0)}</small>
+      <div class="quote-card">
+        <div class="quote-kicker">Bonne nouvelle</div>
+        <div class="quote-title">Ce séjour est disponible</div>
+
+        <div class="quote-price">
+          ${formatEuro(data.total_price)}
+        </div>
+
+        <div class="quote-details">
+          ${data.nights} nuits pour ${data.guests} voyageur${Number(data.guests) > 1 ? "s" : ""}
+          ${data.cleaning_fee ? `<br>dont forfait ménage : ${formatEuro(data.cleaning_fee)}` : ""}
+        </div>
+
+        <div class="quote-next">
+          Complétez le formulaire ci-dessous pour recevoir une confirmation personnalisée.
+        </div>
+      </div>
     `;
+
     leadForm.classList.remove("hidden");
   } catch (err) {
     result.className = "result error";

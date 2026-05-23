@@ -77,6 +77,43 @@ button {
   border-top: 1px solid var(--border);
 }
 
+.lead-form h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.lead-form label {
+  display: block;
+  margin-top: 12px;
+}
+
+.lead-form input,
+.lead-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#leadBtn {
+  margin-top: 18px;
+}
+
+#leadResult {
+  margin-top: 14px;
+  font-size: 14px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.checkbox span {
+  flex: 1;
+  line-height: 1.4;
+}
+
 .hidden {
   display: none;
 }
@@ -110,4 +147,48 @@ textarea {
   color: var(--muted);
   line-height: 1.4;
   margin-top: 10px;
+}
+
+.quote-card {
+  padding: 16px;
+  border-radius: 14px;
+  background: #f7f2ea;
+  border: 1px solid var(--border);
+}
+
+.quote-kicker {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.quote-title {
+  margin-top: 4px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.quote-price {
+  margin-top: 12px;
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.quote-details {
+  margin-top: 10px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.quote-next {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-weight: 700;
+  color: var(--text);
 }
