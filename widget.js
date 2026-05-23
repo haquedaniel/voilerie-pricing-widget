@@ -12,6 +12,11 @@ function formatEuro(value) {
   }).format(value);
 }
 
+let lastQuote = null;
+
+const leadBtn = document.getElementById("leadBtn");
+const leadResult = document.getElementById("leadResult");
+
 quoteBtn.addEventListener("click", async () => {
   result.className = "result";
   result.textContent = "Recherche en cours...";
@@ -124,8 +129,85 @@ quoteBtn.addEventListener("click", async () => {
       </div>
     `;
     leadForm.classList.remove("hidden");
+
+    lastQuote = {
+      property_id: data.property_id,
+      check_in: data.check_in,
+      check_out: data.check_out,
+      nights: data.nights,
+      guests: data.guests,
+      currency: data.currency,
+      accommodation_total: accommodationOnly,
+      cleaning_fee: data.cleaning_fee || 0,
+      taxe_de_sejour: taxeDeSejour,
+      quoted_total: estimatedTotal,
+    };
   } catch (err) {
     result.className = "result error";
     result.textContent = `Erreur : ${err.message}`;
+  }
+});
+
+leadBtn.addEventListener("click", async () => {
+  leadResult.textContent = "";
+
+  const gdprConsent = document.getElementById("gdprConsent").checked;
+
+  if (!gdprConsent) {
+    leadResult.textContent = "Merci d’accepter l’utilisation de vos données pour envoyer la demande.";
+    return;
+  }
+
+  if (!lastQuote) {
+    leadResult.textContent = "Merci de vérifier les disponibilités avant d’envoyer une demande.";
+    return;
+  }
+
+  const payload = {
+    ...lastQuote,
+    name: document.getElementById("leadName").value.trim(),
+    email: document.getElementById("leadEmail").value.trim(),
+    phone: document.getElementById("leadPhone").value.trim(),
+    message: document.getElementById("leadMessage").value.trim(),
+    gdpr_consent: gdprConsent,
+    source_url: window.location.href,
+  };
+
+  if (!payload.name || !payload.email) {
+    leadResult.textContent = "Merci d’indiquer votre nom et votre email.";
+    return;
+  }
+
+  leadBtn.disabled = true;
+  leadBtn.textContent = "Envoi en cours...";
+
+  try {
+    const response = await fetch("https://api.leclosdelavoilerie.com/lead", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    if (!data.ok) {
+      throw new Error(data.error || "Erreur inconnue");
+    }
+
+    leadResult.className = "result success";
+    leadResult.innerHTML = `
+      <strong>Merci, votre demande a bien été envoyée.</strong><br>
+      Nous revenons vers vous rapidement avec une confirmation et les prochaines étapes.<br>
+      <small>Les dates ne sont pas bloquées automatiquement tant que la réservation n’est pas confirmée.</small>
+    `;
+
+    leadBtn.textContent = "Demande envoyée";
+  } catch (err) {
+    leadBtn.disabled = false;
+    leadBtn.textContent = "Envoyer la demande";
+    leadResult.className = "result error";
+    leadResult.textContent = `Erreur : ${err.message}`;
   }
 });
