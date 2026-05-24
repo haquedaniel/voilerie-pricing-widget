@@ -22,6 +22,17 @@ const initialPropertyId = params.get("property_id");
 
 const theme = params.get("theme");
 
+const portfolio = params.get("data-portfolio");
+
+if (portfolio && propertySelect) {
+  [...propertySelect.options].forEach((option) => {
+    if (option.dataset.portfolio !== portfolio) {
+      option.remove();
+    }
+  });
+}
+
+
 function applyTheme() {
   const root = document.documentElement;
 
