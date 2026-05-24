@@ -22,15 +22,7 @@ const initialPropertyId = params.get("property_id");
 
 const theme = params.get("theme");
 
-const portfolio = params.get("data-portfolio");
 
-if (portfolio && propertySelect) {
-  [...propertySelect.options].forEach((option) => {
-    if (option.dataset.portfolio !== portfolio) {
-      option.remove();
-    }
-  });
-}
 
 
 function applyTheme() {
@@ -64,6 +56,16 @@ if (initialPropertyId && propertySelect) {
 
   // Optional: hide selector when the page is for a fixed apartment
   propertySelect.closest("label").style.display = "none";
+}
+
+const portfolio = params.get("portfolio");
+
+if (portfolio && propertySelect) {
+  [...propertySelect.options].forEach((option) => {
+    if (option.dataset.portfolio !== portfolio) {
+      option.remove();
+    }
+  });
 }
 
 quoteBtn.addEventListener("click", async () => {
